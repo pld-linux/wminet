@@ -1,0 +1,54 @@
+--- wminet.app/HINTS	Sat Nov 14 23:36:11 1998
++++ wminet.app.pius/HINTS	Wed Feb  9 16:59:06 2000
+@@ -51,8 +51,8 @@
+ click on one of the 5 information gadgets in the interface
+ statistics display.
+ 
+-You may define your settings in ~/.wminetrc, take a look at
+-the supplied wminetrc...
++You may define your settings in ~/.wminetrc, take a look at
++the supplied /etc/X11/Apps/wminetrc...
+ 
+ Using Port Watchers
+ --------------------------------------------------------------
+@@ -63,7 +63,8 @@
+ 
+  How this works:
+ 
+-in either your /etc/wminetrc or ~/.wminetrc files, you will see options like:
++in either your /etc/X11/Apps/wminetrc or ~/.wminetrc files,
++you will see options like:
+ 
+ portwatch1.pos=0
+ portwatch1.port=25
+--- wminet.app/wminet/wminet.c	Fri Dec 18 12:07:27 1998
++++ wminet.app.pius/wminet/wminet.c	Wed Feb  9 17:03:40 2000
+@@ -218,8 +218,8 @@
+ 
+         if (!Read_Config_File(config_file))
+         {
+-            // Fall back to /etc/wminetrc
+-            sprintf(config_file, "/etc/wminetrc");
++            // Fall back to /etc/X11/Apps/wminetrc
++            sprintf(config_file, "/etc/X11/Apps/wminetrc");
+         
+             Read_Config_File(config_file);
+         }
+--- wminet.app/wminet/wminetrc	Fri Dec 18 11:56:58 1998
++++ wminet.app.pius/wminet/wminetrc	Wed Feb  9 17:06:06 2000
+@@ -62,7 +62,7 @@
+ ftp_pid_path=/var/run/
+ 
+ # Do we use proftpd? 0 = wu.ftpd , 1 = proftpd
+-use_proftpd=0
++use_proftpd=1
+ 
+ # Programs to run when clicked...
+ #
+@@ -71,5 +71,5 @@
+ action1=rxvt -bg black -fg white -e top
+ action2=rxvt -bg black -fg white -e sh -c "w; read"
+ action3=rxvt -bg black -fg white -e sh -c "ftpwho; read"
+-action4=rxvt -bg black -fg white -e tail -f /usr/local/apache/var/logs/access_log
++action4=rxvt -bg black -fg white -e tail -f /var/log/httpd/access_log
+ action5=rxvt -bg black -fg white -e sh -c "showmount;read"
