@@ -4,7 +4,7 @@ Summary(pl):	Dokowalny aplet dla WindowMakera monitoruj±cy inetd
 Summary(pt_BR):	Applet para monitorar serviços de rede
 Name:		wminet
 Version:	2.0.3
-Release:	7
+Release:	8
 License:	GPL
 Group:		X11/Window Managers/Tools
 Source0:	http://www.neotokyo.org/illusion/%{name}-%{version}.tar.gz
@@ -67,12 +67,11 @@ número de usuários e processos no sistema.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_sysconfdir},%{_applnkdir}/DockApplets}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_sysconfdir},%{_desktopdir}/docklets}
 
 install %{name}/%{name} $RPM_BUILD_ROOT%{_bindir}
 install %{name}/wminetrc $RPM_BUILD_ROOT%{_sysconfdir}
-#install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/DockApplets
-
+install %{SOURCE1} $RPM_BUILD_ROOT%{_desktopdir}/docklets
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -81,6 +80,5 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc BUGS CHANGES HINTS README TODO
 %attr(755,root,root) %{_bindir}/%{name}
-
-%config %{_sysconfdir}/wminetrc
-#%%{_applnkdir}/DockApplets/%{name}.desktop
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/wminetrc
+%{_desktopdir}/docklets/%{name}.desktop
