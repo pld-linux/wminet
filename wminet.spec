@@ -54,7 +54,7 @@ Przyk³adowe mo¿liwo¶ci, jakie daje ci WMiNET:
 %patch1 -p1
 
 %build
-make -C %{name} \
+%{__make} -C %{name} \
 	FLAGS="$RPM_OPT_FLAGS -I/usr/X11R6/include"
 
 %install
