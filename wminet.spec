@@ -7,8 +7,6 @@ Version:	2.0.3
 Release:	7
 License:	GPL
 Group:		X11/Window Managers/Tools
-Group(de):	X11/Fenstermanager/Werkzeuge
-Group(pl):	X11/Zarz±dcy Okien/Narzêdzia
 Source0:	http://www.neotokyo.org/illusion/%{name}-%{version}.tar.gz
 Source1:	%{name}.desktop
 Patch0:		%{name}-rc.patch
