@@ -14,6 +14,7 @@ BuildRequires:	xpm-devel
 BuildRoot:	/tmp/%{name}-%{version}-root
 
 %define 	_prefix		/usr/X11R6
+%define		_applnkdir	%{_datadir}/applnk
 
 %description
 WMiNET is a complete inetd monitoring dock.app, it's mainly
@@ -54,11 +55,11 @@ make -C %{name} \
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir},/usr/X11R6/share/applnk/DockApplets}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir},%{_applnkdir}/DockApplets}
 
 install -s %{name}/%{name} $RPM_BUILD_ROOT%{_bindir}
 install %{name}/wminetrc $RPM_BUILD_ROOT%{_datadir}
-install %{SOURCE1} $RPM_BUILD_ROOT/usr/X11R6/share/applnk/DockApplets 
+install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/DockApplets 
 
 gzip -9nf BUGS CHANGES HINTS README TODO
 
@@ -72,4 +73,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %config %{_datadir}/wminetrc
 
-/usr/X11R6/share/applnk/DockApplets/wminet.desktop
+%{_applnkdir}/DockApplets/wminet.desktop
