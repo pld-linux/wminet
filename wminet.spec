@@ -2,7 +2,7 @@ Summary:	Inetd monitoring WindowMaker dock applet
 Summary(pl):	Dokowalny aplet dla WindowMakera monitoruj±cy inetd 
 Name:		wminet
 Version:	2.0.3
-Release:	5
+Release:	6
 License:	GPL
 Group:		X11/Window Managers/Tools
 Group(de):	X11/Fenstermanager/Werkzeuge
