@@ -13,10 +13,9 @@ Patch1:		wminet-home_etc.patch
 BuildRequires:	XFree86-devel
 BuildRequires:	xpm-devel
 ExclusiveArch:	%{ix86} alpha
-BuildRoot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define 	_prefix		/usr/X11R6
-%define		_applnkdir	%{_datadir}/applnk
 %define		_sysconfdir	/etc/X11/Apps
 
 %description
