@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=wminet
+Comment=Inetd Monitor
+Comment[pl]=Monitor Inetd
+Exec=wminet
+Terminal=0
+Type=Application
