@@ -2,7 +2,7 @@ Summary:	Inetd monitoring WindowMaker dock applet
 Summary(pl):	Dokowalny aplet dla WindowMakera monitoruj±cy inetd 
 Name:		wminet
 Version:	2.0.3
-Release:	2
+Release:	3
 Copyright:	GPL
 Group:		X11/Window Managers/Tools
 Group(pl):	X11/Zarz±dcy Okien/Narzêdzia
@@ -11,6 +11,8 @@ Patch:		wminet-rcpath.patch
 BuildPrereq:	XFree86-devel
 BuildPrereq:	xpm-devel
 BuildRoot:	/tmp/%{name}-%{version}-root
+
+%define _prefix         /usr/X11R6
 
 %description
 WMiNET is a complete inetd monitoring dock.app, it's mainly
@@ -41,18 +43,18 @@ Przyk³adowe mo¿liwo¶ci, jakie daje ci WMiNET:
 	* Monitorowanie lpd.
 
 %prep
-%setup -q -n wminet.app
+%setup -q -n %{name}.app
 %patch -p1
 
 %build
-cd wminet
+cd %{name}
 make FLAGS="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/usr/X11R6/{bin,share/wminet}
-install -s wminet/wminet $RPM_BUILD_ROOT/usr/X11R6/bin
-install wminet/wminetrc $RPM_BUILD_ROOT/usr/X11R6/share/wminet
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}}
+install -s %{name}/%{name} $RPM_BUILD_ROOT%{_bindir}
+install %{name}/wminetrc $RPM_BUILD_ROOT%{_datadir}
 
 gzip -9nf BUGS CHANGES HINTS README TODO
 
@@ -62,12 +64,16 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc {BUGS,CHANGES,HINTS,README,TODO}.gz
-%attr(755,root,root) /usr/X11R6/bin/wminet
+%attr(755,root,root) %{_bindir}/%{name}
 
-%dir /usr/X11R6/share/wminet
-%config /usr/X11R6/share/wminet/wminetrc
+%config %{_datadir}/wminetrc
 
 %changelog
+* Mon May 17 1999 Piotr Czerwiñski <pius@pld.org.pl>
+  [2.1.3-3]
+- added using more rpm macros,
+- package is FHS 2.0 compliant.
+
 * Wed Apr  5 1999 Piotr Czerwiñski <pius@pld.org.pl>
   [2.1.3-2]
 - cleaned up a bit spec file for PLD use,
