@@ -82,4 +82,4 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/%{name}
 
 %config %{_sysconfdir}/wminetrc
-#%{_applnkdir}/DockApplets/%{name}.desktop
+#%%{_applnkdir}/DockApplets/%{name}.desktop
