@@ -48,7 +48,7 @@ Przyk³adowe mo¿liwo¶ci, jakie daje ci WMiNET:
  - Opcje podawane w linii poleceñ;
  - W³±czanie/wy³±czanie monitorowania w ~/.wminterc;
  - Mo¿liwo¶æ konfigurowania rozmieszczenia statystyk;
- - Mozliwo¶æ korzystania z w³asnych skryptów/poleceñ;
+ - Mo¿liwo¶æ korzystania z w³asnych skryptów/poleceñ;
  - Monitorowanie lpd;
  - Wsparcie dla $CONFIG_DIR/wminetrc.
 
