@@ -73,14 +73,13 @@ install %{name}/%{name} $RPM_BUILD_ROOT%{_bindir}
 install %{name}/wminetrc $RPM_BUILD_ROOT%{_sysconfdir}
 #install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/DockApplets
 
-gzip -9nf BUGS CHANGES HINTS README TODO
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc *.gz
+%doc BUGS CHANGES HINTS README TODO
 %attr(755,root,root) %{_bindir}/%{name}
 
 %config %{_sysconfdir}/wminetrc
