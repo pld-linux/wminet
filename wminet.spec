@@ -8,6 +8,7 @@ Release:	7
 License:	GPL
 Group:		X11/Window Managers/Tools
 Source0:	http://www.neotokyo.org/illusion/%{name}-%{version}.tar.gz
+# Source0-md5:	4836d8c2e8b8a13b9fc2200c24da2f63
 Source1:	%{name}.desktop
 Patch0:		%{name}-rc.patch
 Patch1:		%{name}-home_etc.patch
