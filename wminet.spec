@@ -5,11 +5,12 @@ Version:	2.0.3
 Release:	5
 License:	GPL
 Group:		X11/Window Managers/Tools
+Group(de):	X11/Fenstermanager/Werkzeuge
 Group(pl):	X11/Zarz±dcy Okien/Narzêdzia
 Source0:	http://www.neotokyo.org/illusion/%{name}-%{version}.tar.gz
-Source1:	wminet.desktop
-Patch0:		wminet-rc.patch
-Patch1:		wminet-home_etc.patch
+Source1:	%{name}.desktop
+Patch0:		%{name}-rc.patch
+Patch1:		%{name}-home_etc.patch
 BuildRequires:	XFree86-devel
 ExclusiveArch:	%{ix86} alpha
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -54,13 +55,13 @@ Przyk³adowe mo¿liwo¶ci, jakie daje ci WMiNET:
 
 %build
 %{__make} -C %{name} \
-	FLAGS="$RPM_OPT_FLAGS -I/usr/X11R6/include"
+	FLAGS="%{rpmcflags} -I/usr/X11R6/include"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_sysconfdir},%{_applnkdir}/DockApplets}
 
-install -s %{name}/%{name} $RPM_BUILD_ROOT%{_bindir}
+install %{name}/%{name} $RPM_BUILD_ROOT%{_bindir}
 install %{name}/wminetrc   $RPM_BUILD_ROOT%{_sysconfdir}
 install %{SOURCE1}         $RPM_BUILD_ROOT%{_applnkdir}/DockApplets 
 
