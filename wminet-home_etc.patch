@@ -1,0 +1,326 @@
+--- wminet.app/HINTS	Wed Feb  9 17:17:34 2000
++++ wminet.app.pius/HINTS	Wed Feb  9 17:15:28 2000
+@@ -51,8 +51,8 @@
+ click on one of the 5 information gadgets in the interface
+ statistics display.
+ 
+-You may define your settings in ~/.wminetrc, take a look at
+-the supplied /etc/X11/Apps/wminetrc...
++You may define your settings in $CONFIG_DIR/wminetrc or ~/.wminetrc,
++take a look at the supplied /etc/X11/Apps/wminetrc...
+ 
+ Using Port Watchers
+ --------------------------------------------------------------
+@@ -63,8 +63,8 @@
+ 
+  How this works:
+ 
+-in either your /etc/X11/Apps/wminetrc or ~/.wminetrc files,
+-you will see options like:
++in either your /etc/X11/Apps/wminetrc or $CONFIG_DIR/wminetrc (~/.wminetrc)
++files, you will see options like:
+ 
+ portwatch1.pos=0
+ portwatch1.port=25
+--- wminet.app/README	Fri Dec 18 12:01:14 1998
++++ wminet.app.pius/README	Wed Feb  9 17:18:54 2000
+@@ -31,7 +31,8 @@
+ 	* Enable/disable monitoring through ~/.wminetrc;
+         * Customs stats posistioning throught ~/.wminetrc
+ 	* User-definable scripts/commands through ~/.wminetrc;
+-	* lpd monitoring
++	* lpd monitoring;
++	* Support for $CONFIG_DIR/wminetrc.
+ 	  
+ WMiNET is being developped on Alpha and x86 machines running
+ Linux (RedHat-5.1, RedHat-5.0 and SlackWare) but WMiNET is 
+--- wminet.app/wminet/Makefile	Sat Dec 12 04:15:44 1998
++++ wminet.app.pius/wminet/Makefile	Wed Feb  9 17:13:42 2000
+@@ -4,7 +4,8 @@
+ OBJS =	wminet.o \
+ 		../wmgeneral/wmgeneral.o \
+ 		../wmgeneral/misc.o \
+-		../wmgeneral/list.o
++		../wmgeneral/list.o \
++		userdir.o
+ 
+ 
+ .c.o:
+--- wminet.app/wminet/userdir.c	Thu Jan  1 01:00:00 1970
++++ wminet.app.pius/wminet/userdir.c	Wed Feb  9 17:13:42 2000
+@@ -0,0 +1,167 @@
++// $Id$
++#include "userdir.h"
++    
++static char *nonulhome = "";
++
++/******************************************************************************/
++    
++int getusercfv (char *variable, 
++		    char *home_dir, 
++		    char *user_dir, 
++		    size_t stringsize)
++{
++	struct stat st;
++	char *d;
++	
++	bzero (user_dir, stringsize);
++	if (variable == NULL || *variable == '\0') return (-1);
++	if (home_dir == NULL) home_dir = nonulhome;
++	d = getenv (variable);	
++	if (d == NULL || *d == '\0') return (-1);
++	if (*d == '/') 
++	    {
++	    strncpy (user_dir, d, stringsize-1);
++	    }
++	else
++	    {
++	    snprintf (user_dir, stringsize-1, "%s/%s", home_dir, d);
++	    }
++	    
++	if (stat(user_dir,&st) != -1 && S_ISDIR(st.st_mode)) 
++	    {
++	    return (0);
++	    }
++	
++	return (-1);
++}
++
++/******************************************************************************/
++
++int detectcfv(struct cfv *CFV) {
++	if (CFV->subname == NULL) CFV->subname = nonulhome;
++	if (CFV->home_dir == NULL) CFV->home_dir = getenv ("HOME");
++	if (CFV->home_dir == NULL) CFV->home_dir = CFV->home_scd;
++	if (CFV->home_dir == NULL) return (-1);
++	return 0;
++}
++
++/******************************************************************************/
++
++int preparemain(struct cfv *CFV) {
++	char *p;
++	struct stat st;
++	if ((p = strrchr(CFV->result, '/')) && *(p+1) == '\0') 
++	    p = '\0';
++	snprintf ((rindex(CFV->result,'\0')), MAXPATHLEN-1, "/%s", 
++		  CFV->subname);
++	if (stat( CFV->result,&st) != -1 
++	     && CFV->mode ? 
++		S_ISDIR(st.st_mode) : 
++		S_ISREG(st.st_mode)) /* have file or dir */
++	    return (1);
++	return 0;
++}
++
++/******************************************************************************/
++
++int preparehome(struct cfv *CFV) {
++	struct stat st;
++    	if (CFV->home_dir == NULL || *(CFV->home_dir) == '\0') return (-1);
++	if (CFV->prefix == NULL && CFV->suffix == NULL) return (-1);
++	snprintf (CFV->result, MAXPATHLEN-1, "%s/%s%s%s", 
++		       CFV->home_dir, 
++		       CFV->prefix? CFV->prefix:"",
++		       CFV->subname,
++		       CFV->suffix? CFV->suffix:"");
++	if (stat(CFV->result,&st) != -1 
++		 && CFV->mode ? 
++		    S_ISDIR(st.st_mode) : 
++		    S_ISREG(st.st_mode)) /* have file or dir */
++		return (2);
++	return (-1);
++}
++
++/******************************************************************************/
++
++int usercfv (struct cfv *CFV) {
++	int gr;
++	gr = detectcfv(CFV);
++	if (gr) return gr;
++	/* get environment variable */
++	gr = getusercfv (CFV->variable, 
++			CFV->home_dir, 
++			CFV->result,
++			MAXPATHLEN);
++	if (gr != -1) 	/* have main directory */
++	    {
++		gr = preparemain(CFV);
++		if (gr) return gr;
++	    }
++	/* don't have main directory or a proper variable set */
++	gr = preparehome(CFV);
++	return gr;
++}
++	
++/******************************************************************************/
++
++/* If directory or file doesn't exist returns the best one wich may be created */
++int notnullusercfv (struct cfv *CFV) {
++	int gr;
++	if ((usercfv(CFV)) == -1) {
++	    gr = detectcfv(CFV);
++	    if (gr) return gr;	/* remember, it works for errors! */
++	    /* get the environment variable */
++	    gr = getusercfv (CFV->variable, 
++			    CFV->home_dir, 
++			    CFV->result,
++			    MAXPATHLEN);
++	    if (gr != -1) 	/* have main directory */
++		{
++		    gr = preparemain(CFV);
++		    return 0;
++		}
++	    /* don't have main directory or a proper variable set */
++	    gr = preparehome(CFV);
++	    return 0;
++ 	}
++	return 0;	
++}
++    
++/******************************************************************************/
++
++FILE *maynullfopencfv (struct cfv *CFV, const char *mode)
++    {
++    FILE *cfvfile = NULL;
++    
++    CFV->mode = M_REGULAR_FILE;
++    if ((usercfv (CFV)) == -1) return (NULL);	
++    cfvfile = fopen (CFV->result, mode);
++    return (cfvfile);
++    }
++/******************************************************************************/
++
++FILE *notnullfopencfv (struct cfv *CFV, const char *mode)
++    {
++    FILE *cfvfile = NULL;
++    
++    CFV->mode = M_REGULAR_FILE;
++    if ((notnullusercfv (CFV)) == -1) return (NULL);	
++    cfvfile = fopen (CFV->result, mode);
++    return (cfvfile);
++    }
++
++/******************************************************************************/
++    
++FILE *fopencfv (struct cfv *CFV, const char *mode)
++    {
++    FILE *cfvfile = NULL;
++
++    if (cfvfile == NULL && (strpbrk(mode, "wa")) != NULL) /* create in best location */
++	cfvfile = notnullfopencfv (CFV, mode);
++    else 
++	cfvfile = maynullfopencfv (CFV, mode);
++    
++    return (cfvfile);
++    }
++
++/******************************************************************************/
+\ No newline at end of file
+--- wminet.app/wminet/userdir.h	Thu Jan  1 01:00:00 1970
++++ wminet.app.pius/wminet/userdir.h	Wed Feb  9 17:13:42 2000
+@@ -0,0 +1,56 @@
++// $Id$
++#ifndef USERDIR__H
++#define USERDIR__H
++
++#include <unistd.h>
++#include <string.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <sys/types.h>
++#include <sys/stat.h>
++#include <sys/param.h>
++
++#define	M_REGULAR_FILE	0
++#define	M_DIRECTORY	1
++
++struct cfv {
++	char result[MAXPATHLEN];	/* our result			*/
++	char *variable;	/* name of an environment variable		*/
++	char *home_dir;	/* home directory or NULL for autodetect	*/
++	char *home_scd; /* directory if home_dir==NULL and no result	*/
++	char *subname;	/* core name of a file/directory		*/
++    	char *prefix;	/* prefix when using directly home_dir		*/
++	char *suffix;	/* suffix when using directly home_dir		*/
++	int mode;	/* expected: M_REGULAR_FILE or M_DIRECTORY	*/
++	};
++
++/* reads environment variable. if the path isn't absolute will add $HOME/
++ * at the beginning
++ * return: 0 - directory exists
++ *         -1 - directory doesn't exist
++ */
++int getusercfv (char *variable, 
++		    char *home_dir, 
++		    char *user_dir,
++		    size_t stringsize);
++/* reads the $HOME variable */
++int detectcfv(struct cfv *CFV);
++
++/* looks for the config/data file/dir.
++ * result: -1 - error - cannot find file/dir 
++ *         0 - ok
++ *         CFV.result set
++ */
++int usercfv (struct cfv *CFV);
++/* looks for the config/data file/dir.
++ * result: -1 - error - cannot read $HOME
++ *          0 - ok - if the CFV.result exists, read it. If not create it.
++ *              CFV.result set
++ */              
++int notnullusercfv (struct cfv *CFV);
++
++FILE *fopencfv (struct cfv *CFV, const char *mode);
++FILE *maynullfopencfv (struct cfv *CFV, const char *mode);
++FILE *notnullfopencfv (struct cfv *CFV, const char *mode);
++
++#endif
+--- wminet.app/wminet/wminet.c	Wed Feb  9 17:17:34 2000
++++ wminet.app.pius/wminet/wminet.c	Wed Feb  9 17:13:42 2000
+@@ -48,6 +48,7 @@
+ 
+ #include "config.h"
+ #include "proftpd.h"
++#include "userdir.h"
+ 
+ #define WMINET_VERSION "2.0.3"
+ 
+@@ -181,7 +182,7 @@
+ 
+     DIR         *dir;
+     struct dirent *dent;
+-
++    struct cfv etcfile;
+     char config_file[512];
+     char buf[64];
+ 
+@@ -214,15 +215,22 @@
+     }
+     else
+     {
+-        sprintf(config_file, "%s/.wminetrc", getenv("HOME"));
++        etcfile.variable = "CONFIG_DIR";
++        etcfile.home_dir = NULL;
++        etcfile.home_scd = NULL;
++        etcfile.subname  = "wminetrc";
++        etcfile.prefix   = ".";
++        etcfile.suffix   = "";
++        etcfile.mode     = M_REGULAR_FILE;
+ 
+-        if (!Read_Config_File(config_file))
+-        {
++        if ((usercfv (&etcfile)) == -1)
+             // Fall back to /etc/X11/Apps/wminetrc
+             sprintf(config_file, "/etc/X11/Apps/wminetrc");
+-        
+-            Read_Config_File(config_file);
+-        }
++	else
++	    // ok, we've found something in $CONFIG_DIR or $HOME, so use it
++	    sprintf(config_file, "%s", etcfile.result);
++
++	Read_Config_File(config_file);
+     }
+ 
+     
