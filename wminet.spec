@@ -2,11 +2,12 @@ Summary:	Inetd monitoring WindowMaker dock applet
 Summary(pl):	Dokowalny aplet dla WindowMakera monitoruj±cy inetd 
 Name:		wminet
 Version:	2.0.3
-Release:	3
+Release:	4
 Copyright:	GPL
 Group:		X11/Window Managers/Tools
 Group(pl):	X11/Zarz±dcy Okien/Narzêdzia
-Source:		http://www.neotokyo.org/illusion/%{name}-%{version}.tar.gz
+Source0:	http://www.neotokyo.org/illusion/%{name}-%{version}.tar.gz
+Source1:	wminet.desktop
 Patch:		wminet-rcpath.patch
 BuildPrereq:	XFree86-devel
 BuildPrereq:	xpm-devel
@@ -53,10 +54,11 @@ make -C %{name} \
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir},/etc/X11/applnk/DockApplets}
 
 install -s %{name}/%{name} $RPM_BUILD_ROOT%{_bindir}
 install %{name}/wminetrc $RPM_BUILD_ROOT%{_datadir}
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/X11/applnk/DockApplets 
 
 gzip -9nf BUGS CHANGES HINTS README TODO
 
@@ -69,6 +71,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/%{name}
 
 %config %{_datadir}/wminetrc
+
+/etc/X11/applnk/DockApplets/wminet.desktop
 
 %changelog
 * Mon May 17 1999 Piotr Czerwiñski <pius@pld.org.pl>
