@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=wminet
+Name=WmInet
 Comment=Inetd Monitor
 Comment[pl]=Monitor Inetd
 Exec=wminet
