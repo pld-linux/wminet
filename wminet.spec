@@ -13,7 +13,6 @@ Patch0:		%{name}-rc.patch
 Patch1:		%{name}-home_etc.patch
 URL:		http://www.neotokyo.org/illusion/
 BuildRequires:	XFree86-devel
-ExclusiveArch:	%{ix86} alpha
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define 	_prefix		/usr/X11R6
@@ -63,8 +62,8 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_sysconfdir},%{_applnkdir}/DockApplets}
 
 install %{name}/%{name} $RPM_BUILD_ROOT%{_bindir}
-install %{name}/wminetrc   $RPM_BUILD_ROOT%{_sysconfdir}
-install %{SOURCE1}         $RPM_BUILD_ROOT%{_applnkdir}/DockApplets 
+install %{name}/wminetrc $RPM_BUILD_ROOT%{_sysconfdir}
+#install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/DockApplets 
 
 gzip -9nf BUGS CHANGES HINTS README TODO
 
@@ -77,4 +76,4 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/%{name}
 
 %config %{_sysconfdir}/wminetrc
-%{_applnkdir}/DockApplets/%{name}.desktop
+#%{_applnkdir}/DockApplets/%{name}.desktop
