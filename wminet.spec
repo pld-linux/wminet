@@ -11,7 +11,6 @@ Source1:	wminet.desktop
 Patch0:		wminet-rc.patch
 Patch1:		wminet-home_etc.patch
 BuildRequires:	XFree86-devel
-BuildRequires:	xpm-devel
 ExclusiveArch:	%{ix86} alpha
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
