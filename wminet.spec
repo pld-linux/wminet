@@ -73,18 +73,3 @@ rm -rf $RPM_BUILD_ROOT
 %config %{_datadir}/wminetrc
 
 /etc/X11/applnk/DockApplets/wminet.desktop
-
-%changelog
-* Mon May 17 1999 Piotr Czerwiñski <pius@pld.org.pl>
-  [2.1.3-3]
-- added using more rpm macros,
-- package is FHS 2.0 compliant.
-
-* Wed Apr  5 1999 Piotr Czerwiñski <pius@pld.org.pl>
-  [2.1.3-2]
-- cleaned up a bit spec file for PLD use,
-- changed wminetrc file location to /usr/X11R6/share/wminet
-  instead of /etc.
-
-* Fri Dec 18 1998 Jochem Wichers Hoeth <wiho@chem.uva.nl>
-- initial rpm release.
