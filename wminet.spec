@@ -1,5 +1,7 @@
 Summary:	Inetd monitoring WindowMaker dock applet
 Summary(pl):	Dokowalny aplet dla WindowMakera monitoruj±cy inetd 
+Summary(pt_BR):	Applet para monitorar serviços de rede
+Summary(es):	Applet para monitorar servicios de red
 Name:		wminet
 Version:	2.0.3
 Release:	6
@@ -47,6 +49,14 @@ Przyk³adowe mo¿liwo¶ci, jakie daje ci WMiNET:
 	* Mozliwo¶æ korzystania z w³asnych skryptów/poleceñ;
 	* Monitorowanie lpd;
 	* Wsparcie dla $CONFIG_DIR/wminetrc.
+
+%description -l pt_BR
+Wminet monitora serviços de rede tais como FTP, HTTP e NFS bem como
+o número de usuários e processos no sistema.
+
+%description -l es
+Wminet monitora servicios de red (FTP, HTTP y NFS) bien como
+el número de usuarios y procesos en el sistema.
 
 %prep
 %setup -q -n %{name}.app
