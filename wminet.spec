@@ -54,11 +54,11 @@ make -C %{name} \
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir},/etc/X11/applnk/DockApplets}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir},/usr/X11R6/share/applnk/DockApplets}
 
 install -s %{name}/%{name} $RPM_BUILD_ROOT%{_bindir}
 install %{name}/wminetrc $RPM_BUILD_ROOT%{_datadir}
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/X11/applnk/DockApplets 
+install %{SOURCE1} $RPM_BUILD_ROOT/usr/X11R6/share/applnk/DockApplets 
 
 gzip -9nf BUGS CHANGES HINTS README TODO
 
@@ -72,4 +72,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %config %{_datadir}/wminetrc
 
-/etc/X11/applnk/DockApplets/wminet.desktop
+/usr/X11R6/share/applnk/DockApplets/wminet.desktop
