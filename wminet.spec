@@ -2,19 +2,22 @@ Summary:	Inetd monitoring WindowMaker dock applet
 Summary(pl):	Dokowalny aplet dla WindowMakera monitoruj±cy inetd 
 Name:		wminet
 Version:	2.0.3
-Release:	4
-Copyright:	GPL
+Release:	5
+License:	GPL
 Group:		X11/Window Managers/Tools
 Group(pl):	X11/Zarz±dcy Okien/Narzêdzia
 Source0:	http://www.neotokyo.org/illusion/%{name}-%{version}.tar.gz
 Source1:	wminet.desktop
-Patch:		wminet-rcpath.patch
+Patch0:		wminet-rc.patch
+Patch1:		wminet-home_etc.patch
 BuildRequires:	XFree86-devel
 BuildRequires:	xpm-devel
+ExclusiveArch:	%{ix86} alpha
 BuildRoot:	/tmp/%{name}-%{version}-root
 
 %define 	_prefix		/usr/X11R6
 %define		_applnkdir	%{_datadir}/applnk
+%define		_sysconfdir	/etc/X11/Apps
 
 %description
 WMiNET is a complete inetd monitoring dock.app, it's mainly
@@ -22,13 +25,14 @@ designed for usage in WindowMaker's dock and gives you some
 nice & nifty features like:
         * Monitors number of processes, users, ftp users,
           http users, and NFS mounts;
-        * Monitors any tcp port you specify.
+        * Monitors any tcp port you specify;
         * Selectable LED or LCD GUI;
         * Commandline options (-h for help);
         * Enable/disable monitoring through ~/.wminetrc;
         * Customs stats posistioning throught ~/.wminetrc
         * User-definable scripts/commands through ~/.wminetrc;
-        * lpd monitoring
+        * lpd monitoring;
+	* Support for $CONFIG_DIR/wminetrc.
 
 %description -l pl
 WMiNET jest pe³nowarto¶ciowym narzêdziem monitoruj±cym inetd,
@@ -42,24 +46,25 @@ Przyk³adowe mo¿liwo¶ci, jakie daje ci WMiNET:
 	* W³±czanie/wy³±czanie monitorowania w ~/.wminterc;
 	* Mo¿liwo¶æ konfigurowania rozmieszczenia statystyk;
 	* Mozliwo¶æ korzystania z w³asnych skryptów/poleceñ;
-	* Monitorowanie lpd.
+	* Monitorowanie lpd;
+	* Wsparcie dla $CONFIG_DIR/wminetrc.
 
 %prep
 %setup -q -n %{name}.app
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
-
 make -C %{name} \
 	FLAGS="$RPM_OPT_FLAGS -I/usr/X11R6/include"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir},%{_applnkdir}/DockApplets}
+install -d $RPM_BUILD_ROOT{%{_bindir},%{_sysconfdir},%{_applnkdir}/DockApplets}
 
 install -s %{name}/%{name} $RPM_BUILD_ROOT%{_bindir}
-install %{name}/wminetrc $RPM_BUILD_ROOT%{_datadir}
-install %{SOURCE1} $RPM_BUILD_ROOT%{_applnkdir}/DockApplets 
+install %{name}/wminetrc   $RPM_BUILD_ROOT%{_sysconfdir}
+install %{SOURCE1}         $RPM_BUILD_ROOT%{_applnkdir}/DockApplets 
 
 gzip -9nf BUGS CHANGES HINTS README TODO
 
@@ -71,6 +76,5 @@ rm -rf $RPM_BUILD_ROOT
 %doc {BUGS,CHANGES,HINTS,README,TODO}.gz
 %attr(755,root,root) %{_bindir}/%{name}
 
-%config %{_datadir}/wminetrc
-
-%{_applnkdir}/DockApplets/wminet.desktop
+%config %{_sysconfdir}/wminetrc
+%{_applnkdir}/DockApplets/%{name}.desktop
