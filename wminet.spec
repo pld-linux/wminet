@@ -4,7 +4,7 @@ Summary(pl):	Dokowalny aplet dla WindowMakera monitoruj±cy inetd
 Summary(pt_BR):	Applet para monitorar serviços de rede
 Name:		wminet
 Version:	2.0.3
-Release:	6
+Release:	7
 License:	GPL
 Group:		X11/Window Managers/Tools
 Group(de):	X11/Fenstermanager/Werkzeuge
