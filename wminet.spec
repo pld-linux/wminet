@@ -12,7 +12,7 @@ BuildPrereq:	XFree86-devel
 BuildPrereq:	xpm-devel
 BuildRoot:	/tmp/%{name}-%{version}-root
 
-%define _prefix         /usr/X11R6
+%define _prefix	/usr/X11R6
 
 %description
 WMiNET is a complete inetd monitoring dock.app, it's mainly
@@ -47,12 +47,14 @@ Przyk³adowe mo¿liwo¶ci, jakie daje ci WMiNET:
 %patch -p1
 
 %build
-cd %{name}
-make FLAGS="$RPM_OPT_FLAGS"
+
+make -C %{name} \
+	FLAGS="$RPM_OPT_FLAGS"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_datadir}}
+
 install -s %{name}/%{name} $RPM_BUILD_ROOT%{_bindir}
 install %{name}/wminetrc $RPM_BUILD_ROOT%{_datadir}
 
