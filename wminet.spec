@@ -22,7 +22,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 WMiNET is a complete inetd monitoring dock.app, it's mainly designed
 for usage in WindowMaker's dock and gives you some nice & nifty
 features like:
-        - Monitors number of processes, users, ftp users, http users, and NFS
+        - Monitors number of processes, users, FTP users, HTTP users, and NFS
           mounts;
         - Monitors any tcp port you specify;
         - Selectable LED or LCD GUI;
@@ -42,7 +42,7 @@ WMiNET jest pe³nowarto¶ciowym narzêdziem monitoruj±cym inetd,
 zaprojektowanym do u¿ycia g³ównie jako aplet dla Doku WindowMakera.
 Przyk³adowe mo¿liwo¶ci, jakie daje ci WMiNET:
  - Monitorowanie liczby procesów, u¿ytkowników - tych zwyk³ych, i tych
-   po³±czonych przez ftp i http, montowañ przez NFS;
+   po³±czonych przez FTP i HTTP, montowañ przez NFS;
  - Monitorowanie ka¿dego okre¶lonego przez ciebie portu;
  - Graficzny interfejs do wyboru - LED lub LCD;
  - Opcje podawane w linii poleceñ;
