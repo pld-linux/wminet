@@ -11,6 +11,7 @@ Source0:	http://www.neotokyo.org/illusion/%{name}-%{version}.tar.gz
 Source1:	%{name}.desktop
 Patch0:		%{name}-rc.patch
 Patch1:		%{name}-home_etc.patch
+URL:		http://www.neotokyo.org/illusion/
 BuildRequires:	XFree86-devel
 ExclusiveArch:	%{ix86} alpha
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -72,7 +73,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc {BUGS,CHANGES,HINTS,README,TODO}.gz
+%doc *.gz
 %attr(755,root,root) %{_bindir}/%{name}
 
 %config %{_sysconfdir}/wminetrc
