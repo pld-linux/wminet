@@ -3,6 +3,6 @@ Name=WmInet
 Comment=Inetd Monitor
 Comment[pl]=Monitor Inetd
 Exec=wminet
-Terminal=0
+Terminal=false
 Type=Application
 # vi: encoding=utf-8
