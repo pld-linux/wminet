@@ -4,7 +4,7 @@ Summary(pl):	Dokowalny aplet dla WindowMakera monitoruj±cy inetd
 Summary(pt_BR):	Applet para monitorar serviços de rede
 Name:		wminet
 Version:	2.0.3
-Release:	8
+Release:	9
 License:	GPL
 Group:		X11/Window Managers/Tools
 Source0:	http://www.neotokyo.org/illusion/%{name}-%{version}.tar.gz
@@ -63,7 +63,8 @@ número de usuários e processos no sistema.
 
 %build
 %{__make} -C %{name} \
-	FLAGS="%{rpmcflags} -I/usr/X11R6/include"
+	FLAGS="%{rpmcflags} -I/usr/X11R6/include" \
+	LIBDIR="-L/usr/X11R6/%{_lib}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
