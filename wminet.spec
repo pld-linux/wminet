@@ -81,5 +81,5 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc BUGS CHANGES HINTS README TODO
 %attr(755,root,root) %{_bindir}/%{name}
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/wminetrc
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/wminetrc
 %{_desktopdir}/docklets/%{name}.desktop
