@@ -1,7 +1,7 @@
 Summary:	Inetd monitoring WindowMaker dock applet
-Summary(es):	Applet para monitorar servicios de red
-Summary(pl):	Dokowalny aplet dla WindowMakera monitoruj±cy inetd
-Summary(pt_BR):	Applet para monitorar serviÁos de rede
+Summary(es.UTF-8):   Applet para monitorar servicios de red
+Summary(pl.UTF-8):   Dokowalny aplet dla WindowMakera monitorujƒÖcy inetd
+Summary(pt_BR.UTF-8):   Applet para monitorar servi√ßos de rede
 Name:		wminet
 Version:	2.0.3
 Release:	9
@@ -33,28 +33,28 @@ features like:
 - lpd monitoring;
 - Support for $CONFIG_DIR/wminetrc.
 
-%description -l es
-Wminet monitora servicios de red (FTP, HTTP y NFS) bien como el n˙mero
+%description -l es.UTF-8
+Wminet monitora servicios de red (FTP, HTTP y NFS) bien como el n√∫mero
 de usuarios y procesos en el sistema.
 
-%description -l pl
-WMiNET jest pe≥nowarto∂ciowym narzÍdziem monitoruj±cym inetd,
-zaprojektowanym do uøycia g≥Ûwnie jako aplet dla Doku WindowMakera.
-Przyk≥adowe moøliwo∂ci, jakie daje ci WMiNET:
-- Monitorowanie liczby procesÛw, uøytkownikÛw - tych zwyk≥ych, i tych
-  po≥±czonych przez FTP i HTTP, montowaÒ przez NFS;
-- Monitorowanie kaødego okre∂lonego przez ciebie portu;
+%description -l pl.UTF-8
+WMiNET jest pe≈Çnowarto≈õciowym narzƒôdziem monitorujƒÖcym inetd,
+zaprojektowanym do u≈ºycia g≈Ç√≥wnie jako aplet dla Doku WindowMakera.
+Przyk≈Çadowe mo≈ºliwo≈õci, jakie daje ci WMiNET:
+- Monitorowanie liczby proces√≥w, u≈ºytkownik√≥w - tych zwyk≈Çych, i tych
+  po≈ÇƒÖczonych przez FTP i HTTP, montowa≈Ñ przez NFS;
+- Monitorowanie ka≈ºdego okre≈õlonego przez ciebie portu;
 - Graficzny interfejs do wyboru - LED lub LCD;
-- Opcje podawane w linii poleceÒ;
-- W≥±czanie/wy≥±czanie monitorowania w ~/.wminterc;
-- Moøliwo∂Ê konfigurowania rozmieszczenia statystyk;
-- Moøliwo∂Ê korzystania z w≥asnych skryptÛw/poleceÒ;
+- Opcje podawane w linii polece≈Ñ;
+- W≈ÇƒÖczanie/wy≈ÇƒÖczanie monitorowania w ~/.wminterc;
+- Mo≈ºliwo≈õƒá konfigurowania rozmieszczenia statystyk;
+- Mo≈ºliwo≈õƒá korzystania z w≈Çasnych skrypt√≥w/polece≈Ñ;
 - Monitorowanie lpd;
 - Wsparcie dla $CONFIG_DIR/wminetrc.
 
-%description -l pt_BR
-Wminet monitora serviÁos de rede tais como FTP, HTTP e NFS bem como o
-n˙mero de usu·rios e processos no sistema.
+%description -l pt_BR.UTF-8
+Wminet monitora servi√ßos de rede tais como FTP, HTTP e NFS bem como o
+n√∫mero de usu√°rios e processos no sistema.
 
 %prep
 %setup -q -n %{name}.app
