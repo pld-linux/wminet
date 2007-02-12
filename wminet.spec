@@ -1,7 +1,7 @@
 Summary:	Inetd monitoring WindowMaker dock applet
-Summary(es.UTF-8):   Applet para monitorar servicios de red
-Summary(pl.UTF-8):   Dokowalny aplet dla WindowMakera monitorujący inetd
-Summary(pt_BR.UTF-8):   Applet para monitorar serviços de rede
+Summary(es.UTF-8):	Applet para monitorar servicios de red
+Summary(pl.UTF-8):	Dokowalny aplet dla WindowMakera monitorujący inetd
+Summary(pt_BR.UTF-8):	Applet para monitorar serviços de rede
 Name:		wminet
 Version:	2.0.3
 Release:	9
