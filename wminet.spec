@@ -4,7 +4,7 @@ Summary(pl.UTF-8):	Dokowalny aplet dla WindowMakera monitorujący inetd
 Summary(pt_BR.UTF-8):	Applet para monitorar serviços de rede
 Name:		wminet
 Version:	2.0.3
-Release:	9
+Release:	10
 License:	GPL
 Group:		X11/Window Managers/Tools
 Source0:	http://www.neotokyo.org/illusion/%{name}-%{version}.tar.gz
@@ -13,10 +13,11 @@ Source1:	%{name}.desktop
 Patch0:		%{name}-rc.patch
 Patch1:		%{name}-home_etc.patch
 URL:		http://www.neotokyo.org/illusion/
-BuildRequires:	XFree86-devel
+BuildRequires:  xorg-lib-libXext-devel
+BuildRequires:  xorg-lib-libXpm-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_sysconfdir	/etc/X11/Apps
+%define		_sysconfdir	/etc/X11
 
 %description
 WMiNET is a complete inetd monitoring dock.app, it's mainly designed
@@ -63,8 +64,8 @@ número de usuários e processos no sistema.
 
 %build
 %{__make} -C %{name} \
-	FLAGS="%{rpmcflags} -I/usr/X11R6/include" \
-	LIBDIR="-L/usr/X11R6/%{_lib}"
+	FLAGS="%{rpmcflags} -I/usr/include" \
+	LIBDIR="-L/usr/%{_lib}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
